@@ -596,13 +596,8 @@ public class DiscreteSeekBar extends View {
     }
 
     @Override
-    public void scheduleDrawable(Drawable who, Runnable what, long when) {
-        super.scheduleDrawable(who, what, when);
-    }
-
-    @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
+    protected void onSizeChanged(int width, int height, int oldWidth, int oldHeight) {
+        super.onSizeChanged(width, height, oldWidth, oldHeight);
         int thumbWidth = mThumb.getIntrinsicWidth();
         int thumbHeight = mThumb.getIntrinsicHeight();
         int addedThumb = mAddedTouchBounds;
@@ -652,7 +647,7 @@ public class DiscreteSeekBar extends View {
         }
         if (isEnabled() && (focused || pressed) && mIndicatorPopupEnabled) {
             //We want to add a small delay here to avoid
-            //poping in/out on simple taps
+            //popping in/out on simple taps
             removeCallbacks(mShowIndicatorRunnable);
             postDelayed(mShowIndicatorRunnable, INDICATOR_DELAY_FOR_TAPS);
         } else {
@@ -677,7 +672,7 @@ public class DiscreteSeekBar extends View {
     private String convertValueToMessage(int value) {
         String format = mIndicatorFormatter != null ? mIndicatorFormatter : DEFAULT_FORMATTER;
         //We're trying to re-use the Formatter here to avoid too much memory allocations
-        //But I'm not completey sure if it's doing anything good... :(
+        //But I'm not completely sure if it's doing anything good... :(
         //Previously, this condition was wrong so the Formatter was always re-created
         //But as I fixed the condition, the formatter started outputting trash characters from previous
         //calls, so I mark the StringBuilder as empty before calling format again.
@@ -899,7 +894,7 @@ public class DiscreteSeekBar extends View {
         int halfThumb = thumbWidth / 2;
         float scaleDraw = (mValue - mMin) / (float) (mMax - mMin);
 
-        //This doesn't matter if RTL, as we just need the "avaiable" area
+        //This doesn't matter if RTL, as we just need the "available" area
         int left = getPaddingLeft() + halfThumb + addedThumb;
         int right = getWidth() - (getPaddingRight() + halfThumb + addedThumb);
         int available = right - left;
@@ -947,7 +942,7 @@ public class DiscreteSeekBar extends View {
     }
 
     @Override
-    protected boolean verifyDrawable(Drawable who) {
+    protected boolean verifyDrawable(@NonNull Drawable who) {
         return who == mThumb || who == mTrack || who == mScrubber || who == mRipple || super.verifyDrawable(who);
     }
 
@@ -1048,11 +1043,11 @@ public class DiscreteSeekBar extends View {
         }
 
         @Override
-        public void writeToParcel(Parcel outcoming, int flags) {
-            super.writeToParcel(outcoming, flags);
-            outcoming.writeInt(progress);
-            outcoming.writeInt(max);
-            outcoming.writeInt(min);
+        public void writeToParcel(Parcel out, int flags) {
+            super.writeToParcel(out, flags);
+            out.writeInt(progress);
+            out.writeInt(max);
+            out.writeInt(min);
         }
 
         public static final Creator<CustomState> CREATOR =
